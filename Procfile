@@ -1,1 +1,1 @@
-web: python ripbot.py
+web: python tony.py

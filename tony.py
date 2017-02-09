@@ -49,7 +49,7 @@ class GroupMeBot(object):
         self.markovs = None
         # self.setup_markovs()
 
-        log.info('Ripbot up and ready.')
+        log.info('tony is up and ready.')
 
         if os.environ.get('IS_TEST', False):
             # post to test
@@ -131,7 +131,7 @@ class GroupMeBot(object):
                 if gifme is not None:
                     post = self.is_gifme(gifme, text)
 
-                # not originating from ripbot
+                # not originating from tony
                 if str(name) != str(bot_name):
 
                         # matches string in format: '@First Last ++ more text'
@@ -215,12 +215,12 @@ class GroupMeBot(object):
                             post = self.is_why(text)
 
                         elif when_where is not None:
-                            if str(bot_name) in ['test-ripbot', 'ripbot', 'krom']:
+                            if str(bot_name) in ['test-tony', 'tony', 'krom']:
                                 post = self.is_when_where(when_where, text,
                                                           str(bot_name))
 
                         elif agenda is not None:
-                            if str(bot_name) in ['test-ripbot', 'ripbot', 'krom']:
+                            if str(bot_name) in ['test-tony', 'tony', 'krom']:
                                 post = self.is_agenda(agenda, text,
                                                       str(bot_name))
 
@@ -477,7 +477,7 @@ class GroupMeBot(object):
 
     def is_who(self, text, group_id):
         """
-        Response for asking ripbot who.
+        Response for asking tony who.
         """
         log.info('MATCH: who in "{}".'.format(text))
 
@@ -494,7 +494,7 @@ class GroupMeBot(object):
 
     def is_why(self, text):
         """
-        Response for asking ripbot why.
+        Response for asking tony why.
         """
         log.info('MATCH: why in "{}".'.format(text))
 
@@ -599,40 +599,9 @@ class GroupMeBot(object):
 
         return post_text
 
-    def setup_calservice(self):
-        """
-        Sets up cal service.
-        :return: cal service
-        """
-        scopes = ['https://www.googleapis.com/auth/calendar.readonly']
-
-        keyfile = {
-            "type": "service_account",
-            "project_id": "groupemebot",
-            # idk why its not working to get from env
-            "private_key_id": "4abc03b0c291afedcb3e0c72add9cbc5f6e42fdf",
-            # "private_key_id": str(os.environ['CAL_KEY_ID']),
-            "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDDw8x3FHOi1s5J\n2veueLoEfrc1zABZ9kwj8+uUyNboBE6gdsSwxatnUnbf6hKe+qvCKtkGMheudHvn\nmD75G2nRpoYEn8YIjWo9AVJgkVSvrfNGtZcCFXzKlmCKt10uz1Dz4G4tDOEpD9sr\nesZhjJ+VL3ScDRuQ5ty3ZQUVQXJymzh2t8JZzzOQvzA/5ZxiPVfYL1hIyPxKcu+6\nLuUu6pDZKs8oHQwIMxTULMfqp2tvcif5WKrtpIrzX4ZC0BjMC+gFMkSFmJ10+KfL\n3IDqyFH1NK6mvjQ/huNBJi10p9AcSkgqUNocvE2avEWQ583aZ4oBpTv97xyemQtF\nzzQZmus5AgMBAAECggEBAKtcPiNSdLJq42JE2SARL4t1vDvMGdalwRqLjoDLmUq5\nUnYl4KB4N0SXK9VvGOOuuyCYzyYcPRyJfFhKrXzy4RsScCemD/w2hXNnL8u2C3JI\nizYvCENbucPABDwIq/mooc0IfIjUyFdgONKDgxmqtZoqUyGyW5noa/Xg6KUlh+AG\ntWQV0HF3GwtLHMhCYuwryMTRp5jGbBkfdexxV1Yx4CRlEOMw/6OFRAXtEc1Sgmyn\nYPSdQRuE6M2rdQUkBseTOrdLwQHs+SpgqbMA/rdvZP8fRSyN+0pC/uiXqXA0LYST\nSr4xdDh6XTdH2xQ41LDamNqGUyzjDxf7JW7YKn5Py4ECgYEA4aWTAuoW6MmceC/n\n90S1PfTRUkOlvW0RFwi8ww1+LNBIl9hWau1xqUU2M7886FnblW2fG8GF+RDJSkFC\nndO4Syi2U4+xS7WP7jlT2B58xxegdVnbzmCuNH+PerwUJem4oHMXZZZCNBMIjGp/\nVMNiCnpGnJ7zwEeF1d3ZCnt8qmkCgYEA3hkz+LKp7xk8ZVbqvbSnxrRcptQiioK0\nzdYZfumR4hXq7POwNwdW85VZPuu4sjP99hc52lE74e9reeTM82azsqmlMheVBqol\nY9O4B66h48q2/61JduTSBz6wDvBng57P5qzG39FAnFqs1gR/fIp0vrniX+ZmVM6o\n8Py2NF7BAFECgYA5TXX3AIGO3lw4/Vl4Jt+r+zcJIBq/7ymu4s4k7pFDSiWVQiA4\nCVKa/POV0pPiIaes2+jTAKNIK+YiUE5djD26AH3E3LHWmyYRBkfvk1Z2rN5XztkO\nIOk8dcR3E7o+Iot7W57ucmkfllHObuElInUMWh8CeS9HfiJTvIH4soFnOQKBgHYh\nXZ1IGk7MU21rX4vrjNmJkUZCyuR1RQm+eO0h+rAQDFZf/zgltT/2DfQDmMdgFBJS\npDjUwE8Z80ZwRfqog6fhx7XvCRr0YNLKB7Y+UmlApzkyyEJuzq9/zlED2WsOi3Ic\nL+NX/0+qgweKeOybECFp6Vgsyf0NtpoHMDqGs40hAoGAAgMnuMQMtaCJ3SUjDJt5\nhsSeJMNX+ZlcK10qp6frllYkr+YKC9TUdUj1M93OE0WMkTXmkkdDw5HQtHpEFtbo\nFkJv/oClJG7SVZG2EFkYoryDY9tRfR0l+72zf28Yo463Jl6o/s6Q7peuVsVI7OR4\ncytjkqN7RViEi72/axWIvi0=\n-----END PRIVATE KEY-----\n",
-            # "private_key": str(os.environ['CAL_KEY']),
-            "client_email": "ripbotcal@groupemebot.iam.gserviceaccount.com",
-            "client_id": "114400750037198291116",
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://accounts.google.com/o/oauth2/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ripbotcal%40groupemebot.iam.gserviceaccount.com"
-        }
-
-        credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile, scopes)
-
-        http_auth = credentials.authorize(Http())
-
-        service = discovery.build('calendar', 'v3', http=http_auth)
-
-        return service
-
     def is_when_where(self, match, text, cal):
         """
-        Response for asking ripbot when or where for calendar query.
+        Response for asking tony when or where for calendar query.
         """
 
         log.info('MATCH: when_where in "{}".'.format(text))
@@ -648,7 +617,7 @@ class GroupMeBot(object):
             'reed': 'reedmensultimate@gmail.com'
         }
 
-        if cal in ['ripbot', 'test-ripbot']:
+        if cal in ['tony', 'test-tony']:
             calendar = calendars['rip']
         elif cal == 'krom':
             calendar = calendars['reed']
@@ -698,7 +667,7 @@ class GroupMeBot(object):
 
     def is_agenda(self, match, text, cal):
         """
-        Response for asking ripbot for agenda.
+        Response for asking tony for agenda.
         """
         log.info('MATCH: agenda in "{}".'.format(text))
 
@@ -714,7 +683,7 @@ class GroupMeBot(object):
             'reed': 'reedmensultimate@gmail.com'
         }
 
-        if cal in ['ripbot', 'test-ripbot']:
+        if cal in ['tony', 'test-tony']:
             calendar = calendars['rip']
         elif cal == 'krom':
             calendar = calendars['reed']
@@ -1196,9 +1165,9 @@ class Database(object):
             log.error(e)
 
 
-class RipbotServer(object):
+class TonyServer(object):
     """
-    Simple server for the ripbot.
+    Simple server for tony.
     """
     def __init__(self):
         """
@@ -1217,14 +1186,14 @@ class RipbotServer(object):
         """
         Sets up callbacks.
         """
-        # send callbacks to ripbot
+        # send callbacks to tony
         port = int(os.environ.get('PORT', 5000))
         self.app.route('/groupme', methods=['POST'])(bot.callback)
         self.app.run('0.0.0.0', port=port)
 
     def shutdown(self, signun, frame):
         """
-        Gracefully shuts down flask server and ripbot.
+        Gracefully shuts down flask server and tony.
         :param signun: param from signal callback
         :param frame: param from signal callback
         """
@@ -1242,19 +1211,19 @@ def start():
     names = Bot.list()
 
     # nested dict of group_id, with post method and bot name
-    # eg: {23373961: {'post': <post method>, 'name': 'ripbot'}}
+    # eg: {23373961: {'post': <post method>, 'name': 'tony'}}
     bots = dict(zip(group_ids, [dict(zip(['post', 'name'], i)) for i in zip(
         posts, names)]))
 
     # start server
-    server = RipbotServer()
+    server = TonyServer()
     # GLOBALS ARE BAD
     # TODO: make a class to handle startup and restarting
     global log
     log = server.log
 
     # initialize bot
-    # ripbot = GroupMeBot(bot.post)
+    # tony = GroupMeBot(bot.post)
     global bot
     bot = GroupMeBot(bots)
 

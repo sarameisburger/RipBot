@@ -1,4 +1,4 @@
-## RipBot GroupMe bot
+## Tony the UPRoar GroupMe bot
 
 ### What is it?
 
