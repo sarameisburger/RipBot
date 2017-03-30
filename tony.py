@@ -45,7 +45,7 @@ class GroupMeBot(object):
     def __init__(self, bots):
         self.bots = bots
 
-        self.cal_service = self.setup_calservice()
+        #elf.cal_service = self.setup_calservice()
         self.markovs = None
         # self.setup_markovs()
 
