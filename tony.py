@@ -15,9 +15,9 @@ import signal
 import requests
 
 # google cal search import
-from oauth2client.service_account import ServiceAccountCredentials
-from httplib2 import Http
-from apiclient import discovery
+#from oauth2client.service_account import ServiceAccountCredentials
+#from httplib2 import Http
+#from apiclient import discovery
 
 # forecast api
 from forecastio import load_forecast as forecast
@@ -467,8 +467,8 @@ class GroupMeBot(object):
         post_text += '\n[[@]botname] youtube|yt search terms'
         post_text += '\n[[@]botname] topscores|bottomscores'
         post_text += '\n[@]botname who|why question'
-        post_text += '\n[@]botname when|where calendar query (need ' \
-                     'associated calendar)'
+        #post_text += '\n[@]botname when|where calendar query (need ' \
+         #            'associated calendar)'
         post_text += '\n[[@]botname] agenda [int]'
         post_text += '\n[[@]botname] forecast [location]'
         post_text += '\n[[@]botname] markov [single start word (case sensitive)]'
@@ -599,130 +599,130 @@ class GroupMeBot(object):
 
         return post_text
 
-    def is_when_where(self, match, text, cal):
-        """
-        Response for asking tony when or where for calendar query.
-        """
+    # def is_when_where(self, match, text, cal):
+    #     """
+    #     Response for asking tony when or where for calendar query.
+    #     """
 
-        log.info('MATCH: when_where in "{}".'.format(text))
+    #     log.info('MATCH: when_where in "{}".'.format(text))
 
-        query = match.group(1).strip()
-        query = query.rstrip('.!?')
-        log.info('Querying calendar with "{}".'.format(query))
+    #     query = match.group(1).strip()
+    #     query = query.rstrip('.!?')
+    #     log.info('Querying calendar with "{}".'.format(query))
 
-        now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
+    #     now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
 
-        calendars = {
-            'rip' : '5d1j2fnq4irkl6q15va06f6e4g@group.calendar.google.com',
-            'reed': 'reedmensultimate@gmail.com'
-        }
+    #     calendars = {
+    #         'rip' : '5d1j2fnq4irkl6q15va06f6e4g@group.calendar.google.com',
+    #         'reed': 'reedmensultimate@gmail.com'
+    #     }
 
-        if cal in ['tony', 'test-tony']:
-            calendar = calendars['rip']
-        elif cal == 'krom':
-            calendar = calendars['reed']
+    #     if cal in ['tony', 'test-tony']:
+    #         calendar = calendars['rip']
+    #     elif cal == 'krom':
+    #         calendar = calendars['reed']
 
-        try:
-            event_result = self.cal_service.events().list(
-                calendarId=calendar,
-                timeMin=now,
-                maxResults=1,
-                singleEvents=True,
-                q=query,
-                fields='items(location, summary, start)',
-                orderBy='startTime').execute()
-        except:
-            return 'Something went wrong'
+    #     try:
+    #         event_result = self.cal_service.events().list(
+    #             calendarId=calendar,
+    #             timeMin=now,
+    #             maxResults=1,
+    #             singleEvents=True,
+    #             q=query,
+    #             fields='items(location, summary, start)',
+    #             orderBy='startTime').execute()
+    #     except:
+    #         return 'Something went wrong'
 
-        event = event_result.get('items', [])
+    #     event = event_result.get('items', [])
 
-        if not event:
-            post_text = 'No upcoming event found.'
+    #     if not event:
+    #         post_text = 'No upcoming event found.'
 
-        else:
-            event = event[0]
+    #     else:
+    #         event = event[0]
 
-            where = 'TBD'
+    #         where = 'TBD'
 
-            what = event['summary']
+    #         what = event['summary']
 
-            try:  # to handle all day events
-                when = event['start']['dateTime']
-                dt = dateutil.parser.parse(when)
-                when = dt.strftime('%a. %b. %d at %I:%M %p')
-            except KeyError:
-                when = event['start']['date']
-                dt = dateutil.parser.parse(when)
-                when = dt.strftime('%a. %b. %d')
+    #         try:  # to handle all day events
+    #             when = event['start']['dateTime']
+    #             dt = dateutil.parser.parse(when)
+    #             when = dt.strftime('%a. %b. %d at %I:%M %p')
+    #         except KeyError:
+    #             when = event['start']['date']
+    #             dt = dateutil.parser.parse(when)
+    #             when = dt.strftime('%a. %b. %d')
 
-            if 'location' in event:
-                where = event['location']
+    #         if 'location' in event:
+    #             where = event['location']
 
-            post_text = '>'
-            post_text += what
-            post_text += '\nlocation: {}'.format(where)
-            post_text += '\ntime: {}'.format(when)
+    #         post_text = '>'
+    #         post_text += what
+    #         post_text += '\nlocation: {}'.format(where)
+    #         post_text += '\ntime: {}'.format(when)
 
-        return post_text
+    #     return post_text
 
-    def is_agenda(self, match, text, cal):
-        """
-        Response for asking tony for agenda.
-        """
-        log.info('MATCH: agenda in "{}".'.format(text))
+    # def is_agenda(self, match, text, cal):
+    #     """
+    #     Response for asking tony for agenda.
+    #     """
+    #     log.info('MATCH: agenda in "{}".'.format(text))
 
-        if match.group(1) is not None:
-            num = int(match.group(1).strip())
-        else:
-            num = 3
+    #     if match.group(1) is not None:
+    #         num = int(match.group(1).strip())
+    #     else:
+    #         num = 3
 
-        now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
+    #     now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
 
-        calendars = {
-            'rip' : '5d1j2fnq4irkl6q15va06f6e4g@group.calendar.google.com',
-            'reed': 'reedmensultimate@gmail.com'
-        }
+    #     calendars = {
+    #         'rip' : '5d1j2fnq4irkl6q15va06f6e4g@group.calendar.google.com',
+    #         'reed': 'reedmensultimate@gmail.com'
+    #     }
 
-        if cal in ['tony', 'test-tony']:
-            calendar = calendars['rip']
-        elif cal == 'krom':
-            calendar = calendars['reed']
+    #     if cal in ['tony', 'test-tony']:
+    #         calendar = calendars['rip']
+    #     elif cal == 'krom':
+    #         calendar = calendars['reed']
 
-        try:
-            events_result = self.cal_service.events().list(
-                calendarId=calendar,
-                timeMin=now,
-                maxResults=num,
-                singleEvents=True,
-                fields='items(location, summary, start)',
-                orderBy='startTime').execute()
-        except:
-            return 'Something went wrong.'
+    #     try:
+    #         events_result = self.cal_service.events().list(
+    #             calendarId=calendar,
+    #             timeMin=now,
+    #             maxResults=num,
+    #             singleEvents=True,
+    #             fields='items(location, summary, start)',
+    #             orderBy='startTime').execute()
+    #     except:
+    #         return 'Something went wrong.'
 
-        events = events_result.get('items', [])
+    #     events = events_result.get('items', [])
 
-        if not events:
-            post_text = 'No upcoming event found.'
+    #     if not events:
+    #         post_text = 'No upcoming event found.'
 
-        else:
-            post_text = '>'
+    #     else:
+    #         post_text = '>'
 
-            for event in events:
-                where = 'TBD'
+    #         for event in events:
+    #             where = 'TBD'
 
-                what = event['summary']
-                when = event['start']['dateTime']
-                if 'location' in event:
-                    where = event['location']
+    #             what = event['summary']
+    #             when = event['start']['dateTime']
+    #             if 'location' in event:
+    #                 where = event['location']
 
-                dt = dateutil.parser.parse(when)
-                when = dt.strftime('%a. %b. %d at %I:%M %p')
+    #             dt = dateutil.parser.parse(when)
+    #             when = dt.strftime('%a. %b. %d at %I:%M %p')
 
-                post_text += what
-                post_text += '\nlocation: {}'.format(where)
-                post_text += '\ntime: {}\n\n'.format(when)
+    #             post_text += what
+    #             post_text += '\nlocation: {}'.format(where)
+    #             post_text += '\ntime: {}\n\n'.format(when)
 
-        return post_text
+    #     return post_text
 
     def setup_markovs(self):
         """
